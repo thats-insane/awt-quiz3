@@ -5,6 +5,8 @@ import (
 	"database/sql"
 	"errors"
 	"time"
+
+	"github.com/thats-insane/awt-quiz3/internal/validator"
 )
 
 /* Common error
@@ -116,4 +118,11 @@ func (u UserModel) Delete(id int64) error {
 	}
 
 	return nil
+}
+
+func Validate(v *validator.Validator, user *User) {
+	v.Check(user.Name != "", "fullname", "cannot be empty")
+	v.Check(user.Email != "", "email", "cannot be empty")
+	v.Check(len(user.Name) <= 25, "fullname", "cannot be more than 25 bytes long")
+	v.Check(len(user.Email) <= 50, "email", "cannot be more than 50 bytes long")
 }

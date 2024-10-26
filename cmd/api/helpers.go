@@ -21,7 +21,6 @@ func (a *appDependencies) readJSON(w http.ResponseWriter, r *http.Request, desti
 	decoder.DisallowUnknownFields()
 
 	err := decoder.Decode(destination)
-
 	if err != nil {
 		var syntaxErr *json.SyntaxError
 		var unmarshalTypeErr *json.UnmarshalTypeError
@@ -53,7 +52,6 @@ func (a *appDependencies) readJSON(w http.ResponseWriter, r *http.Request, desti
 	}
 
 	err = decoder.Decode(&struct{}{})
-
 	if !errors.Is(err, io.EOF) {
 		return errors.New("the body must only contain a single JSON value")
 	}
@@ -88,6 +86,7 @@ func (a *appDependencies) writeJSON(w http.ResponseWriter, status int, data enve
 	}
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(status)
+
 	_, err = w.Write(jsResponse)
 	if err != nil {
 		return err

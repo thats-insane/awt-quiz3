@@ -49,7 +49,6 @@ func (a *appDependencies) createUserHandler(w http.ResponseWriter, r *http.Reque
 	}
 
 	err = a.writeJSON(w, http.StatusCreated, data, headers)
-
 	if err != nil {
 		a.serverErrResponse(w, r, err)
 		return
@@ -60,14 +59,12 @@ func (a *appDependencies) createUserHandler(w http.ResponseWriter, r *http.Reque
 
 func (a *appDependencies) displayUserHandler(w http.ResponseWriter, r *http.Request) {
 	id, err := a.readIDParam(r)
-
 	if err != nil {
 		a.notFoundResponse(w, r)
 		return
 	}
 
 	user, err := a.userModel.Get(id)
-
 	if err != nil {
 		switch {
 		case errors.Is(err, data.ErrRecordNotFound):
@@ -75,7 +72,6 @@ func (a *appDependencies) displayUserHandler(w http.ResponseWriter, r *http.Requ
 		default:
 			a.serverErrResponse(w, r, err)
 		}
-
 		return
 	}
 
@@ -92,14 +88,12 @@ func (a *appDependencies) displayUserHandler(w http.ResponseWriter, r *http.Requ
 
 func (a *appDependencies) updateUserHandler(w http.ResponseWriter, r *http.Request) {
 	id, err := a.readIDParam(r)
-
 	if err != nil {
 		a.notFoundResponse(w, r)
 		return
 	}
 
 	user, err := a.userModel.Get(id)
-
 	if err != nil {
 		switch {
 		case errors.Is(err, data.ErrRecordNotFound):
@@ -117,18 +111,15 @@ func (a *appDependencies) updateUserHandler(w http.ResponseWriter, r *http.Reque
 	}
 
 	err = a.readJSON(w, r, &incomingData)
-
 	if err != nil {
 		a.badRequestResponse(w, r, err)
 		return
 	}
-
 	if incomingData.Name != nil {
 		user.Name = *incomingData.Name
 	}
 
 	err = a.userModel.Update(user)
-
 	if err != nil {
 		a.serverErrResponse(w, r, err)
 		return
@@ -147,14 +138,12 @@ func (a *appDependencies) updateUserHandler(w http.ResponseWriter, r *http.Reque
 
 func (a *appDependencies) deleteUserHandler(w http.ResponseWriter, r *http.Request) {
 	id, err := a.readIDParam(r)
-
 	if err != nil {
 		a.notFoundResponse(w, r)
 		return
 	}
 
 	err = a.userModel.Delete(id)
-
 	if err != nil {
 		switch {
 		case errors.Is(err, data.ErrRecordNotFound):
@@ -162,7 +151,6 @@ func (a *appDependencies) deleteUserHandler(w http.ResponseWriter, r *http.Reque
 		default:
 			a.serverErrResponse(w, r, err)
 		}
-
 		return
 	}
 

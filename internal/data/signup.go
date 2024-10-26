@@ -53,7 +53,7 @@ func (u UserModel) Get(id int64) (*User, error) {
 
 	qry := `
 	SELECT id, fullname, email, created_at, version 
-	FROM user 
+	FROM users 
 	WHERE id = $1`
 
 	var user User
@@ -77,7 +77,7 @@ func (u UserModel) Get(id int64) (*User, error) {
  */
 func (u UserModel) Update(user *User) error {
 	qry := `
-	UPDATE user 
+	UPDATE users 
 	SET fullname = $1, email = $2, version = version + 1 
 	WHERE id = $3 
 	RETURNING version`
@@ -97,7 +97,7 @@ func (u UserModel) Delete(id int64) error {
 	}
 
 	qry := `
-	DELETE FROM user 
+	DELETE FROM users 
 	WHERE id = $1`
 
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)

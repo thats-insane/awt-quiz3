@@ -120,6 +120,8 @@ func (u UserModel) Delete(id int64) error {
 	return nil
 }
 
+/* Validate any data to be entered
+ */
 func Validate(v *validator.Validator, user *User) {
 	v.Check(user.Name != "", "fullname", "cannot be empty")
 	v.Check(user.Email != "", "email", "cannot be empty")
